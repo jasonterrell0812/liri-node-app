@@ -8,20 +8,13 @@ console.log(keysNeeded);
 var Twitter = require('twitter');
  
 var client = new Twitter({
-  consumer_key: '',
-  consumer_secret: '',
-  access_token_key: '',
-  access_token_secret: ''
+  consumer_key: keysNeeded.consumer_key,
+  consumer_secret: keysNeeded.consumer_secret,
+  access_token_key: keysNeeded.access_token_key,
+  access_token_secret: keysNeeded.access_token_secret,
 });
 
 
-//JT: I don't think this is needed because the above is pulling through ok
-// var client = new Twitter({
-//   consumer_key: process.env.TWITTER_CONSUMER_KEY,
-//   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-//   access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-//   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-// });
 
 //request options
 // client.get(path, params, callback);
@@ -44,19 +37,24 @@ var myTweets = process.argv[2];
 
 //test file
 var params = {screen_name: 'JasonNorthwest1'};  //replaced screen_name with JasonNorthwest1
-client.get('search/tweets', params, function(error, tweets, response) { //'statuses/user_timeline' replacing and testing
+client.get('statuses/user_timeline', params, function(error, tweets, response) { //'statuses/user_timeline' replacing and testing
   if (!error) {
-    console.log("test");
-    console.log(params);
+    // console.log(tweets[1].text);
+    for (var i = 0; i < tweets.length; i++) {
+      console.log(tweets[i].text);
+    }
   }
+    
+
+
 });
 
 
-client.get('favorites/list', function(error, tweets, response) {
-  if(error) throw error;
-  console.log(tweets);  // The favorites. 
-  console.log(response);  // Raw response object. 
-});
+// client.get('favorites/list', function(error, tweets, response) {
+//   if(error) throw error;
+//   console.log(tweets);  // The favorites. 
+//   console.log(response);  // Raw response object. 
+// });
 
 
 
